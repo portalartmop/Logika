@@ -1,1 +1,380 @@
-Artem,dima
+/* Rectangle 1 */
+
+position: absolute;
+visibility: hidden;
+width: 386px;
+height: 464px;
+
+background: #D9D9D9;
+
+
+/* Rectangle 2 */
+
+position: absolute;
+width: 1px;
+height: 67px;
+
+background: #D9D9D9;
+
+
+/* Rectangle 3 */
+
+position: absolute;
+width: 1920px;
+height: 1080px;
+
+background: #39363D;
+border-radius: 25px;
+
+
+/* Rectangle 4 */
+
+position: absolute;
+width: 1920px;
+height: 50px;
+
+background: #D9D9D9;
+border-radius: 25px;
+transform: matrix(1, 0, 0, -1, 0, 0);
+
+
+/* Rectangle 6 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 9 */
+
+position: absolute;
+visibility: hidden;
+width: 378px;
+height: 434px;
+
+background: #D9D9D9;
+
+
+/* Rectangle 7 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 12 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 11 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 10 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 14 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 15 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 16 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 17 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 38 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 39 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 40 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 41 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 42 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 33 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 34 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 35 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 36 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 37 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 28 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 29 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 30 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 31 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 32 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 23 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 24 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 25 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 26 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 27 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 18 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 19 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 20 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 21 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 22 */
+
+position: absolute;
+width: 98px;
+height: 119px;
+
+background: #49464D;
+
+
+/* Rectangle 8 */
+
+position: absolute;
+visibility: hidden;
+width: 100px;
+height: 100px;
+
+background: #D9D9D9;
+
+
+/* WORDLE */
+
+position: absolute;
+width: 424px;
+height: 62px;
+
+font-family: 'Notable';
+font-style: normal;
+font-weight: 400;
+font-size: 64px;
+line-height: 83px;
+
+color: #000000;
+
