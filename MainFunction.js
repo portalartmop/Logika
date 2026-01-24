@@ -13,7 +13,6 @@ let currentGuess = "";
 
 const gridEl = document.getElementById("grid");
 
-/* ---------- LOAD WORD ---------- */
 async function loadWord() {
   const res = await fetch("./wordle.json");
   const data = await res.json();
