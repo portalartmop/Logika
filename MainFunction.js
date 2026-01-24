@@ -12,53 +12,51 @@ let row = 0;
 let currentGuess = "";
 
 const gridEl = document.getElementById("grid");
+const cells = gridEl.querySelectorAll(".cell");
 
 async function loadWord() {
   const res = await fetch("./wordle.json");
   const data = await res.json();
-  const words = data.words;
+  const words = data.words.filter(w => w.length === 5);
   secret = words[Math.floor(Math.random() * words.length)];
   console.log("SECRET:", secret);
 }
 
-/* ---------- RENDER GRID ---------- */
 function renderGrid() {
-  gridEl.innerHTML = "";
-
-  grid.forEach(row => {
-    const rowEl = document.createElement("div");
-    rowEl.className = "row";
-
-    row.forEach(cell => {
-      const tile = document.createElement("div");
-      tile.className = `tile ${cell.state}`;
-      tile.textContent = cell.letter;
-      rowEl.appendChild(tile);
-    });
-
-    gridEl.appendChild(rowEl);
-  });
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 5; c++) {
+      const idx = r * 5 + c;
+      const tile = cells[idx];
+      tile.textContent = grid[r][c].letter;
+      tile.className = `cell tile ${grid[r][c].state}`;
+    }
+  }
 }
 
-/* ---------- KEYBOARD INPUT ---------- */
 window.addEventListener("keydown", (e) => {
+  if (row >= 6) return;
+
   currentGuess = handleKeyInput(currentGuess, e.key);
 
   if (e.key === "Enter") {
     if (!isValidWord(currentGuess)) return;
 
     grid = placeGuessInGrid(grid, row, currentGuess, secret);
-    row++;
-    currentGuess = "";
     renderGrid();
 
-    if (isWin(grid[row - 1].map(t => t.letter).join(""), secret)) {
-      alert("🎉 YOU WIN!");
+    if (isWin(currentGuess, secret)) {
+      setTimeout(() => alert("🎉 YOU WIN!"), 100);
+      row = 6;
+      return;
     }
+
+    row++;
+    currentGuess = "";
   }
+
+  renderGrid();
 });
 
-/* ---------- START ---------- */
+// старт гри
 await loadWord();
 renderGrid();
-
