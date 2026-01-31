@@ -9,7 +9,7 @@ import {
 const ROWS = 6;
 const COLS = 5;
 
-let secret = "APPLE"; // можеш змінити або зробити рандом
+let secret = "APPLE";
 let grid = createEmptyGrid(ROWS, COLS);
 let row = 0;
 let currentGuess = "";
@@ -17,9 +17,8 @@ let currentGuess = "";
 const gridEl = document.getElementById("grid");
 const cells = gridEl.querySelectorAll(".cell");
 
-// 🔁 малюємо все поле + поточний ввід
+// 🔁 рендер
 function renderGrid() {
-  // 1) підтверджені рядки (з grid)
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const idx = r * COLS + c;
@@ -28,7 +27,6 @@ function renderGrid() {
     }
   }
 
-  // 2) показуємо те що зараз вводимо (currentGuess)
   const start = row * COLS;
   for (let i = 0; i < currentGuess.length; i++) {
     cells[start + i].textContent = currentGuess[i];
@@ -39,10 +37,8 @@ function renderGrid() {
 window.addEventListener("keydown", (e) => {
   if (row >= ROWS) return;
 
-  // ввод букв / backspace
   currentGuess = handleKeyInput(currentGuess, e.key, COLS);
 
-  // Enter — перевірка
   if (e.key === "Enter") {
     if (!isValidWord(currentGuess, COLS)) {
       alert("Введи слово з 5 букв!");
@@ -62,8 +58,9 @@ window.addEventListener("keydown", (e) => {
     currentGuess = "";
 
     if (row >= ROWS) {
-      setTimeout(() => alert("😢 YOU LOSE! Слово було: " + secret), 100);
-      return;
+      setTimeout(() => {
+        alert("😢 YOU LOSE! Слово було: " + secret);
+      }, 100);
     }
   }
 
