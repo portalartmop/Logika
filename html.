@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вордлі — Архів ігор</title>
+    <style>
+        :root {
+            --bg-color: #121213;
+            --text-color: #ffffff;
+            --tile-bg: #3a3a3c;
+            --correct-bg: #538d4e;
+            --accent-color: #818384;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            border-bottom: 1px solid var(--tile-bg);
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .back-button {
+            background: none;
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-button:hover {
+            background-color: var(--tile-bg);
+        }
+
+        h1 {
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .archive-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        .day-card {
+            background-color: var(--tile-bg);
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .day-card:hover {
+            transform: scale(1.05);
+            background-color: var(--correct-bg);
+        }
+
+        .day-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .day-status {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            color: var(--accent-color);
+        }
+
+        .completed {
+            border-color: var(--correct-bg);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-button">← Назад</a>
+        <h2>ВОРДЛІ АРХІВ</h2>
+        <div style="width: 70px;"></div> </header>
+
+    <h1>Обери день</h1>
+
+    <div class="archive-container" id="archiveGrid">
+        </div>
+
+    <script>
+        // Припустимо, сьогодні 45-й день гри
+        const currentDay = 45; 
+        const archiveGrid = document.getElementById('archiveGrid');
+
+        // Створюємо картки для минулих днів
+        for (let i = currentDay - 1; i >= 1; i--) {
+            const card = document.createElement('div');
+            card.className = 'day-card';
+            
+            // Імітація того, що деякі дні вже пройдені (можна підключити LocalStorage)
+            if (localStorage.getItem(`wordle-day-${i}`)) {
+                card.classList.add('completed');
+            }
+
+            card.innerHTML = `
+                <span class="day-number">#${i}</span>
+                <span class="day-status">Зіграти</span>
+            `;
+
+            card.onclick = () => {
+                // Перехід на головну сторінку з параметром дня в URL
+                window.location.href = `index.html?day=${i}`;
+            };
+
+            archiveGrid.appendChild(card);
+        }
+    </script>
+</body>
+</html>
