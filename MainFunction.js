@@ -1,71 +1,75 @@
-import {
-  createEmptyGrid,
-  placeGuessInGrid,
-  isWin,
-  handleKeyInput,
-  isValidWord
-} from "./wordle.js";
+const secretWord = "APPLE"; // слово для вгадування
+const cells = document.querySelectorAll(".cell");
+const keyboard = document.getElementById("keyboard");
 
-const ROWS = 6;
-const COLS = 5;
+let currentRow = 0;
+let currentCol = 0;
+let gameOver = false;
 
-let secret = "APPLE";
-let grid = createEmptyGrid(ROWS, COLS);
-let row = 0;
-let currentGuess = "";
+keyboard.addEventListener("click", (e) => {
+  if (gameOver) return;
+  if (!e.target.matches("button")) return;
 
-const gridEl = document.getElementById("grid");
-const cells = gridEl.querySelectorAll(".cell");
+  const key = e.target.textContent;
 
-// 🔁 рендер
-function renderGrid() {
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      const idx = r * COLS + c;
-      cells[idx].textContent = grid[r][c].letter;
-      cells[idx].className = `cell ${grid[r][c].state || ""}`;
-    }
+  if (key === "Enter") {
+    checkWord();
+  } else if (key === "←") {
+    deleteLetter();
+  } else {
+    addLetter(key);
   }
+});
 
-  const start = row * COLS;
-  for (let i = 0; i < currentGuess.length; i++) {
-    cells[start + i].textContent = currentGuess[i];
+function addLetter(letter) {
+  if (currentCol < 5) {
+    const index = currentRow * 5 + currentCol;
+    cells[index].textContent = letter;
+    currentCol++;
   }
 }
 
-// ⌨️ клавіатура
-window.addEventListener("keydown", (e) => {
-  if (row >= ROWS) return;
+function deleteLetter() {
+  if (currentCol > 0) {
+    currentCol--;
+    const index = currentRow * 5 + currentCol;
+    cells[index].textContent = "";
+  }
+}
 
-  currentGuess = handleKeyInput(currentGuess, e.key, COLS);
+function checkWord() {
+  if (currentCol < 5) return;
 
-  if (e.key === "Enter") {
-    if (!isValidWord(currentGuess, COLS)) {
-      alert("Введи слово з 5 букв!");
-      return;
-    }
+  let guess = "";
+  for (let i = 0; i < 5; i++) {
+    guess += cells[currentRow * 5 + i].textContent;
+  }
 
-    grid = placeGuessInGrid(grid, row, currentGuess, secret);
-    renderGrid();
+  // перевірка
+  for (let i = 0; i < 5; i++) {
+    const cell = cells[currentRow * 5 + i];
+    const letter = guess[i];
 
-    if (isWin(currentGuess, secret)) {
-      setTimeout(() => alert("🎉 YOU WIN!"), 100);
-      row = ROWS;
-      return;
-    }
-
-    row++;
-    currentGuess = "";
-
-    if (row >= ROWS) {
-      setTimeout(() => {
-        alert("😢 YOU LOSE! Слово було: " + secret);
-      }, 100);
+    if (letter === secretWord[i]) {
+      cell.classList.add("correct");
+    } else if (secretWord.includes(letter)) {
+      cell.classList.add("present");
+    } else {
+      cell.classList.add("absent");
     }
   }
 
-  renderGrid();
-});
+  if (guess === secretWord) {
+    setTimeout(() => alert("🎉 Ти вгадав слово!"), 100);
+    gameOver = true;
+    return;
+  }
 
-// старт
-renderGrid();
+  currentRow++;
+  currentCol = 0;
+
+  if (currentRow === 6) {
+    setTimeout(() => alert("😢 Гру завершено! Слово було: " + secretWord), 100);
+    gameOver = true;
+  }
+}
