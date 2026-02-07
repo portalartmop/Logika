@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>WORDLE</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="game">
     <div class="header">
-      <span class="home">🏠</span>
-      WORDLE
+      <span class="home">🏠</span> WORDLE
     </div>
 
     <!-- GRID -->
-    <div class="grid" id="grid">
-      <!-- 6 × 5 = 30 -->
+    <div class="grid">
       <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
@@ -25,7 +23,7 @@
     </div>
 
     <!-- KEYBOARD -->
-    <div class="keyboard" id="keyboard">
+    <div class="keyboard">
       <div class="row">
         <button>Q</button><button>W</button><button>E</button><button>R</button><button>T</button>
         <button>Y</button><button>U</button><button>I</button><button>O</button><button>P</button>
@@ -43,6 +41,6 @@
     </div>
   </div>
 
-  <script type="module" src="MainFunction.js"></script>
+  <script src="MainFunction.js"></script>
 </body>
 </html>
