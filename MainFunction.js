@@ -6,23 +6,51 @@ let currentRow = 0;
 let currentCol = 0;
 let gameOver = false;
 
+/* =========================
+   ЕКРАННА КЛАВІАТУРА
+========================= */
 keyboard.addEventListener("click", (e) => {
   if (gameOver) return;
   if (!e.target.matches("button")) return;
 
   const key = e.target.textContent;
 
+  handleInput(key);
+});
+
+/* =========================
+   ФІЗИЧНА КЛАВІАТУРА
+========================= */
+document.addEventListener("keydown", (e) => {
+  if (gameOver) return;
+
+  let key = e.key;
+
+  if (key === "Backspace") key = "←";
+  if (key === "Enter") key = "Enter";
+
+  // тільки літери A–Z
+  if (/^[a-zA-Z]$/.test(key)) {
+    key = key.toUpperCase();
+  }
+
+  handleInput(key);
+});
+
+/* =========================
+   ОБРОБКА ВВОДУ
+========================= */
+function handleInput(key) {
   if (key === "Enter") {
     submitRow();
   } else if (key === "←") {
     removeLetter();
-  } else {
+  } else if (/^[A-Z]$/.test(key)) {
     writeLetter(key);
   }
-});
+}
 
 function writeLetter(letter) {
-  // ❌ больше 5 букв в строке нельзя
   if (currentCol >= 5) return;
 
   const index = currentRow * 5 + currentCol;
@@ -39,7 +67,6 @@ function removeLetter() {
 }
 
 function submitRow() {
-  // ❌ если введено меньше 5 букв — нельзя
   if (currentCol < 5) return;
 
   let guess = "";
@@ -48,7 +75,6 @@ function submitRow() {
     guess += cells[currentRow * 5 + i].textContent;
   }
 
-  // проверка букв
   for (let i = 0; i < 5; i++) {
     const cell = cells[currentRow * 5 + i];
     const letter = guess[i];
@@ -62,20 +88,17 @@ function submitRow() {
     }
   }
 
-  // победа
   if (guess === secretWord) {
-    alert("🎉 Ты угадал слово!");
+    alert("🎉 Ти вгадав слово!");
     gameOver = true;
     return;
   }
 
-  // переход на следующую строку
   currentRow++;
   currentCol = 0;
 
-  // конец игры
   if (currentRow === 6) {
-    alert("😢 Игра окончена! Слово было: " + secretWord);
+    alert("😢 Гру закінчено! Слово було: " + secretWord);
     gameOver = true;
   }
 }
