@@ -1,3 +1,4 @@
+import anime from 'animejs';
 const secretWord = "APPLE";
 const cells = document.querySelectorAll(".cell");
 const buttons = document.querySelectorAll(".keyboard button");
