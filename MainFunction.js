@@ -66,39 +66,22 @@ function removeLetter() {
   cells[index].textContent = "";
 }
 
-function submitRow() {
-  if (currentCol < 5) return;
+for (let i = 0; i < 5; i++) {
+  const cell = cells[currentRow * 5 + i];
+  const letter = guess[i];
 
-  let guess = "";
+  setTimeout(() => {
+    cell.classList.add("flip");
 
-  for (let i = 0; i < 5; i++) {
-    guess += cells[currentRow * 5 + i].textContent;
-  }
+    setTimeout(() => {
+      if (letter === secretWord[i]) {
+        cell.classList.add("correct");
+      } else if (secretWord.includes(letter)) {
+        cell.classList.add("present");
+      } else {
+        cell.classList.add("absent");
+      }
+    }, 300);
 
-  for (let i = 0; i < 5; i++) {
-    const cell = cells[currentRow * 5 + i];
-    const letter = guess[i];
-
-    if (letter === secretWord[i]) {
-      cell.classList.add("correct");
-    } else if (secretWord.includes(letter)) {
-      cell.classList.add("present");
-    } else {
-      cell.classList.add("absent");
-    }
-  }
-
-  if (guess === secretWord) {
-    alert("🎉 Ти вгадав слово!");
-    gameOver = true;
-    return;
-  }
-
-  currentRow++;
-  currentCol = 0;
-
-  if (currentRow === 6) {
-    alert("😢 Гру закінчено! Слово було: " + secretWord);
-    gameOver = true;
-  }
+  }, i * 600);
 }
