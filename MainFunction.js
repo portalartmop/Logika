@@ -1,4 +1,4 @@
-const secretWord = "APPLE"; // слово для вгадування
+const secretWord = "APPLE";
 const cells = document.querySelectorAll(".cell");
 const keyboard = document.getElementById("keyboard");
 
@@ -13,39 +13,42 @@ keyboard.addEventListener("click", (e) => {
   const key = e.target.textContent;
 
   if (key === "Enter") {
-    checkWord();
+    submitRow();
   } else if (key === "←") {
-    deleteLetter();
+    removeLetter();
   } else {
-    addLetter(key);
+    writeLetter(key);
   }
 });
 
-function addLetter(letter) {
-  if (currentCol < 5) {
-    const index = currentRow * 5 + currentCol;
-    cells[index].textContent = letter;
-    currentCol++;
-  }
+function writeLetter(letter) {
+  // ❌ больше 5 букв в строке нельзя
+  if (currentCol >= 5) return;
+
+  const index = currentRow * 5 + currentCol;
+  cells[index].textContent = letter;
+  currentCol++;
 }
 
-function deleteLetter() {
-  if (currentCol > 0) {
-    currentCol--;
-    const index = currentRow * 5 + currentCol;
-    cells[index].textContent = "";
-  }
+function removeLetter() {
+  if (currentCol === 0) return;
+
+  currentCol--;
+  const index = currentRow * 5 + currentCol;
+  cells[index].textContent = "";
 }
 
-function checkWord() {
+function submitRow() {
+  // ❌ если введено меньше 5 букв — нельзя
   if (currentCol < 5) return;
 
   let guess = "";
+
   for (let i = 0; i < 5; i++) {
     guess += cells[currentRow * 5 + i].textContent;
   }
 
-  // перевірка
+  // проверка букв
   for (let i = 0; i < 5; i++) {
     const cell = cells[currentRow * 5 + i];
     const letter = guess[i];
@@ -59,17 +62,20 @@ function checkWord() {
     }
   }
 
+  // победа
   if (guess === secretWord) {
-    setTimeout(() => alert("🎉 Ти вгадав слово!"), 100);
+    alert("🎉 Ты угадал слово!");
     gameOver = true;
     return;
   }
 
+  // переход на следующую строку
   currentRow++;
   currentCol = 0;
 
+  // конец игры
   if (currentRow === 6) {
-    setTimeout(() => alert("😢 Гру завершено! Слово було: " + secretWord), 100);
+    alert("😢 Игра окончена! Слово было: " + secretWord);
     gameOver = true;
   }
 }
