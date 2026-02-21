@@ -10,7 +10,7 @@ let col = 0;
 let gameOver = false;
 
 /* ===== INPUT FROM KEYBOARD ===== */
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keypressed", (e) => {
   if (gameOver) return;
 
   const key = e.key.toUpperCase();
