@@ -1,5 +1,7 @@
 import anime from 'animejs';
-const secretWord = "APPLE";
+import words from 'Words.json'
+import random
+const secretWord = randint(words);
 const cells = document.querySelectorAll(".cell");
 const buttons = document.querySelectorAll(".keyboard button");
 
