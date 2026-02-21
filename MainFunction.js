@@ -2,7 +2,7 @@ import anime from 'animejs';
 import words from 'Words.json'
 import random
 const secretWord = Math.random(words);
-const cells = document.querySelectorAll(".cell");
+let cells = document.querySelectorAll(".cell");
 const buttons = document.querySelectorAll(".keyboard button");
 
 let row = 0;
