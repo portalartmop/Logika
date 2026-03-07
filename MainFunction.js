@@ -1,7 +1,8 @@
 import anime from 'animejs';
-import words from 'Words.json'
-import random
-const secretWord = Math.random(words);
+import words from './Words.json';
+
+const secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
+
 let cells = document.querySelectorAll(".cell");
 const buttons = document.querySelectorAll(".keyboard button");
 
@@ -29,11 +30,12 @@ buttons.forEach(btn => {
 
     if (key === "Enter") checkRow();
     else if (key === "←") deleteLetter();
-    else addLetter(key);
+    else addLetter(key.toUpperCase());
   });
 });
 
 /* ===== FUNCTIONS ===== */
+
 function addLetter(letter) {
   if (col >= 5) return;
 
@@ -57,13 +59,19 @@ function checkRow() {
     guess += cells[row * 5 + i].textContent;
   }
 
+  guess = guess.toUpperCase();
+
   for (let i = 0; i < 5; i++) {
     const cell = cells[row * 5 + i];
     const letter = guess[i];
 
-    if (letter === secretWord[i]) cell.classList.add("correct");
-    else if (secretWord.includes(letter)) cell.classList.add("present");
-    else cell.classList.add("absent");
+    if (letter === secretWord[i]) {
+      cell.classList.add("correct");
+    } else if (secretWord.includes(letter)) {
+      cell.classList.add("present");
+    } else {
+      cell.classList.add("absent");
+    }
   }
 
   if (guess === secretWord) {
