@@ -1,39 +1,69 @@
-import anime from 'animejs';
-import words from './Words.json';
-
-const secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
-
-let cells = document.querySelectorAll(".cell");
-const buttons = document.querySelectorAll(".keyboard button");
-
+let cells = [];
+let buttons = [];
 let row = 0;
 let col = 0;
 let gameOver = false;
-document.addEventListener("keydown", (e) => [
+let secretWord = "";
+let words = [];
+
+// Load words from JSON and initialize game
+fetch('./Words.json')
+  .then(response => response.json())
+  .then(data => {
+    words = data;
+    initGame();
+  })
+  .catch(error => {
+    console.error('Error loading words:', error);
+    // Fallback words if JSON fails to load
+    words = ["весна","осінь","зірка","книга","стіна"];
+    initGame();
+  });
+
+function initGame() {
+  cells = document.querySelectorAll(".cell");
+  buttons = document.querySelectorAll(".keyboard button");
   
-/* ===== INPUT FROM KEYBOARD ===== */
-document.addEventListener("keydown", (e) => {
-  if (gameOver) return;
+  if (words.length === 0) {
+    console.error("No words available!");
+    return;
+  }
+  
+  secretWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
+  console.log("Game initialized. Secret word:", secretWord);
+  
+  setupKeyboardListeners();
+}
 
-  const key = e.key.toUpperCase();
-
-  if (key === "ENTER") checkRow();
-  else if (key === "BACKSPACE") deleteLetter();
-  else if (/^[A-Z]$/.test(key)) addLetter(key);
-});
-
-/* ===== INPUT FROM VIRTUAL KEYBOARD ===== */
-buttons.forEach(btn => {
-  btn.addEventListener("click", () => {
+function setupKeyboardListeners() {
+  // Physical keyboard input
+  document.addEventListener("keydown", (e) => {
     if (gameOver) return;
 
-    const key = btn.textContent;
+    const key = e.key.toUpperCase();
 
-    if (key === "Enter") checkRow();
-    else if (key === "←") deleteLetter();
-    else addLetter(key.toUpperCase());
+    if (key === "ENTER") checkRow();
+    else if (key === "BACKSPACE") deleteLetter();
+    else if (key.length === 1 && key !== " ") {
+      console.log("Key pressed:", key);
+      addLetter(key);
+    }
   });
-});
+
+  // Virtual keyboard buttons
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (gameOver) return;
+
+      const key = btn.textContent;
+      console.log("Button clicked:", key);
+
+      if (key === "Enter") checkRow();
+      else if (key === "←") deleteLetter();
+      else addLetter(key.toUpperCase());
+    });
+  });
+}
 
 /* ===== FUNCTIONS ===== */
 
@@ -62,22 +92,44 @@ function checkRow() {
 
   guess = guess.toUpperCase();
 
+  // Build counts for letters in secretWord that are not yet matched as correct
+  const secretCounts = {};
   for (let i = 0; i < 5; i++) {
-    const cell = cells[row * 5 + i];
-    const letter = guess[i];
-
-    if (letter === secretWord[i]) {
-      cell.classList.add("correct");
-    } else if (secretWord.includes(letter)) {
-      cell.classList.add("present");
-    } else {
-      cell.classList.add("absent");
+    if (guess[i] !== secretWord[i]) {
+      secretCounts[secretWord[i]] = (secretCounts[secretWord[i]] || 0) + 1;
     }
   }
 
+  // First pass: mark correct letters
+  const result = new Array(5).fill("absent");
+  for (let i = 0; i < 5; i++) {
+    if (guess[i] === secretWord[i]) {
+      result[i] = "correct";
+    }
+  }
+
+  // Second pass: mark present letters using remaining counts
+  for (let i = 0; i < 5; i++) {
+    if (result[i] !== "correct") {
+      const letter = guess[i];
+      if (secretCounts[letter] > 0) {
+        result[i] = "present";
+        secretCounts[letter] -= 1;
+      }
+    }
+  }
+
+  // Apply classes
+  for (let i = 0; i < 5; i++) {
+    const cell = cells[row * 5 + i];
+    cell.classList.add(result[i]);
+  }
+
   if (guess === secretWord) {
-    alert("🎉 Перемога!");
     gameOver = true;
+    setTimeout(() => {
+      alert("🎉 Перемога!");
+    }, 2000);
     return;
   }
 
@@ -85,7 +137,10 @@ function checkRow() {
   col = 0;
 
   if (row === 6) {
-    alert("😢 Гру завершено! Слово було: " + secretWord);
     gameOver = true;
+    setTimeout(() => {
+      alert("😢 Гру завершено! Слово було: " + secretWord);
+    }, 2000);
+
   }
 }
