@@ -9,7 +9,8 @@ const buttons = document.querySelectorAll(".keyboard button");
 let row = 0;
 let col = 0;
 let gameOver = false;
-
+document.addEventListener("keydown", (e) => [
+  
 /* ===== INPUT FROM KEYBOARD ===== */
 document.addEventListener("keydown", (e) => {
   if (gameOver) return;
