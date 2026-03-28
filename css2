@@ -29,3 +29,11 @@
     float: left;
     margin-left: 15px;
 }
+
+.title {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ccc;
+    display: inline-flex;
+    justif
+}
