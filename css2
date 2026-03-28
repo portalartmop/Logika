@@ -25,7 +25,7 @@
     border-color: #538d4e;
 }
 
-.header a {
+.header a {`
     float: left;
     margin-left: 15px;
 }
@@ -35,5 +35,8 @@
     height: 60px;
     border: 2px solid #ccc;
     display: inline-flex;
-    justif
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    transition: transform 0.6s;
 }
