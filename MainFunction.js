@@ -5,7 +5,11 @@ let col = 0;
 let gameOver = false;
 let secretWord = "";
 let words = [];
+let keyStates = {};
 
+document.getElementById('restart-btn').addEventListener('click', () => {
+  location.reload(); // Найпростіший спосіб скинути гру — перезавантажити сторінку
+});
 // Load words from JSON and initialize game
 fetch('./Words.json')
   .then(response => response.json())
@@ -23,6 +27,11 @@ fetch('./Words.json')
 function initGame() {
   cells = document.querySelectorAll(".cell");
   buttons = document.querySelectorAll(".keyboard button");
+  
+  keyStates = {};
+  buttons.forEach(btn => {
+    btn.classList.remove('wrong', 'present', 'correct');
+  });
   
   if (words.length === 0) {
     console.error("No words available!");
@@ -70,9 +79,21 @@ function setupKeyboardListeners() {
 function addLetter(letter) {
   if (col >= 5) return;
 
+
+
   const index = row * 5 + col;
   cells[index].textContent = letter;
   col++;
+}
+
+function updateButtonClass(letter) {
+  const btn = Array.from(buttons).find(b => b.textContent === letter);
+  if (btn) {
+    btn.classList.remove('wrong', 'present', 'correct');
+    if (keyStates[letter]) {
+      btn.classList.add(keyStates[letter]);
+    }
+  }
 }
 
 function deleteLetter() {
@@ -119,6 +140,21 @@ function checkRow() {
     }
   }
 
+  // Update keyStates based on result
+  for (let i = 0; i < 5; i++) {
+    const letter = guess[i];
+    if (result[i] === "correct") {
+      keyStates[letter] = "correct";
+    } else if (result[i] === "present") {
+      keyStates[letter] = "present";
+    } else {
+      keyStates[letter] = "wrong";
+    }
+  }
+  const uniqueLetters = new Set(guess);
+  uniqueLetters.forEach(letter => updateButtonClass(letter));
+
+
   // Apply classes
   for (let i = 0; i < 5; i++) {
     const cell = cells[row * 5 + i];
@@ -129,7 +165,7 @@ function checkRow() {
     gameOver = true;
     setTimeout(() => {
       alert("🎉 Перемога!");
-    }, 2000);
+    }, 1000);
     return;
   }
 
@@ -140,7 +176,7 @@ function checkRow() {
     gameOver = true;
     setTimeout(() => {
       alert("😢 Гру завершено! Слово було: " + secretWord);
-    }, 2000);
+    }, 1000);
 
   }
 }
