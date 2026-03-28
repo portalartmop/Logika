@@ -103,6 +103,7 @@ function deleteLetter() {
   cells[row * 5 + col].textContent = "";
 }
 
+
 function checkRow() {
   if (col < 5) return;
 
