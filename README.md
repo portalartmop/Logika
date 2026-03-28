@@ -1,3 +1,3 @@
 # Logika
 Our project
-https://prod.liveshare.vsengsaas.visualstudio.com/join?51CAEC661E66030C9408A4469F551EF090F8
+https://prod.liveshare.vsengsaas.visualstudio.com/join?73F99E1F793A47AA0BD2EEDE4DEDD5C4F22E
