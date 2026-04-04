@@ -74,7 +74,7 @@ function setupKeyboardListeners() {
   });
 }
 
-/* ===== FUNCTIONS ===== */
+/* ===== FUNCTIONS ===== */dali maks
 
 function addLetter(letter) {
   if (col >= 5) return;
